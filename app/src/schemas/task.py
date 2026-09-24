@@ -1,23 +1,26 @@
-# from pydantic import BaseModel
-# from typing import Literal
+from pydantic import BaseModel, Field
 
-# class TaskSchema(BaseModel):
-#     title: str
-#     subject: str
-#     completed: bool
-#     student_id: int
-#     teacher_id: int
 
-# class UpdateTaskSchema(BaseModel):
-#     title: str
-#     subject: str
-#     completed: bool
-#     student_id: int
-#     teacher_id: int
+class TaskCreate(BaseModel):
+    title: str = Field(
+        ...,
+        min_length=1,
+        max_length=250
+    )
 
-# class ResponseTaskSchema(BaseModel):
-#     title: str
-#     subject: str
-#     completed: bool
-#     student_id: int
-#     teacher_id: int
+    status: str = Field(
+        ...,
+        min_length=1,
+        max_length=250
+    )
+
+
+class TaskResponse(BaseModel):
+    id: int
+    title: str
+    status: str
+    teacher_id: int
+
+    model_config = {
+        "from_attributes": True
+    }

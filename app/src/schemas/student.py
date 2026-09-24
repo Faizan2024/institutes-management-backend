@@ -1,14 +1,32 @@
-# from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-# class StudentSchema(BaseModel):
-#     course: str
-#     batch: int
-#     user_id: int
 
-# class StudentUpdateSchema(BaseModel):
-#     batch: str
+class StudentCreate(BaseModel):
+    user_id: int
 
-# class StudentResponseSchema(BaseModel):
-#     course: str
-#     batch: int
-#     user_id: int
+    course: str = Field(
+        ...,
+        min_length=1,
+        max_length=250
+    )
+
+    batch: str = Field(
+        ...,
+        min_length=1,
+        max_length=250
+    )
+
+
+class StudentResponse(BaseModel):
+    id: int
+    course: str
+    batch: str
+    user_id: int
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class AssignStudentToTask(BaseModel):
+    student_id: int
